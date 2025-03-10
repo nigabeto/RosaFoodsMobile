@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "400005163913",
+    "project_id": "rosafoods-pi3",
+    "storage_bucket": "rosafoods-pi3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:400005163913:android:1f4ec9e1ea2332c47f0f58",
+        "android_client_info": {
+          "package_name": "com.jrmedia.rosafoods"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsiir7L8MI8Muqa9veh86fbnlLmTpI5tE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

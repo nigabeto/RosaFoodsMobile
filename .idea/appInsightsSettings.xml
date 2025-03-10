@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.jrmedia.rosafoods" />
+                  <option name="mobileSdkAppId" value="1:400005163913:android:1f4ec9e1ea2332c47f0f58" />
+                  <option name="projectId" value="rosafoods-pi3" />
+                  <option name="projectNumber" value="400005163913" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
