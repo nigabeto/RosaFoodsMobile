@@ -50,7 +50,7 @@ public class SplashScreenActivityTest {
         ViewInteraction appCompatEditText = onView(
                 allOf(childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.textInputLayout),
+                                        withId(R.id.textImputLayout),
                                         0),
                                 0),
                         isDisplayed()));
@@ -59,7 +59,7 @@ public class SplashScreenActivityTest {
         ViewInteraction appCompatEditText2 = onView(
                 allOf(childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.textInputLayout2),
+                                        withId(R.id.textImputLayout2),
                                         0),
                                 0),
                         isDisplayed()));

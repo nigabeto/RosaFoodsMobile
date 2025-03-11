@@ -35,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
         mName=findViewById(R.id.reg_name);
         mEmail=findViewById(R.id.reg_email);
         mPassword=findViewById(R.id.reg_password);
-        mRegBtn=findViewById(R.id.reg_btn);
+        mRegBtn=findViewById(R.id.log_btn);
         mAuth=FirebaseAuth.getInstance();
 
 
