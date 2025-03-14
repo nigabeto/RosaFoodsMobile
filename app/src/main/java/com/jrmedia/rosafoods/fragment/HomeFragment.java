@@ -21,8 +21,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.ktx.Firebase;
 import com.jrmedia.rosafoods.R;
+import com.jrmedia.rosafoods.adapter.BestSellAdapter;
 import com.jrmedia.rosafoods.adapter.CategoryAdapter;
 import com.jrmedia.rosafoods.adapter.FeatureAdapter;
+import com.jrmedia.rosafoods.domain.BestSell;
 import com.jrmedia.rosafoods.domain.Category;
 import com.jrmedia.rosafoods.domain.Feature;
 
@@ -33,6 +35,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment {
+    private static final String TAG = "HomeFragment";
     private FirebaseFirestore mStore;
     //Category Tab
     private List<Category> mCategoryList;
@@ -42,7 +45,11 @@ public class HomeFragment extends Fragment {
     private List<Feature> mFeatureList;
     private FeatureAdapter mFeatureAdapter;
     private RecyclerView mFeatureRecyclerView;
-    private static final String TAG = "HomeFragment";
+    //BestSell Tab
+    private List<BestSell> mBestSellList;
+    private BestSellAdapter mBestSellAdapter;
+    private RecyclerView mBestSellRecyclerView;
+
 
 
 
@@ -86,6 +93,7 @@ public class HomeFragment extends Fragment {
             mStore=FirebaseFirestore.getInstance();
             mCatRecyclerView=view.findViewById(R.id.category_recycler);
             mFeatureRecyclerView=view.findViewById(R.id.feature_recycler);
+            mBestSellRecyclerView=view.findViewById(R.id.bestsell_recycler);
             //For Category
             mCategoryList=new ArrayList<>();
             /*mCategoryAdapter=new CategoryAdapter(getContext(),mCategoryList);*/
@@ -99,6 +107,13 @@ public class HomeFragment extends Fragment {
             mFeatureAdapter = new FeatureAdapter(requireContext(), mFeatureList);
             mFeatureRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
             mFeatureRecyclerView.setAdapter(mFeatureAdapter);
+
+            //For BestSell
+            mBestSellList=new ArrayList<>();
+            /*mBestSellAdapter=new BestSellAdapter(getContext(),mBestSellList);*/
+            mBestSellAdapter = new BestSellAdapter(requireContext(), mBestSellList);
+            mBestSellRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
+            mBestSellRecyclerView.setAdapter(mBestSellAdapter);
 
 
             mStore.collection("Category")
@@ -131,6 +146,24 @@ public class HomeFragment extends Fragment {
 
                                 }
                                 mFeatureAdapter.notifyDataSetChanged();
+                            } else {
+                                Log.w(TAG, "Error getting documents.", task.getException());
+                            }
+                        }
+                    });
+
+            mStore.collection("BestSell")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    BestSell bestSell=document.toObject(BestSell.class);
+                                    mBestSellList.add(bestSell);
+
+                                }
+                                mBestSellAdapter.notifyDataSetChanged();
                             } else {
                                 Log.w(TAG, "Error getting documents.", task.getException());
                             }

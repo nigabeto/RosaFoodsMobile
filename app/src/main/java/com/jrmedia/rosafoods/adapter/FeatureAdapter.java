@@ -17,7 +17,9 @@ import com.jrmedia.rosafoods.DetailActivity;
 import com.jrmedia.rosafoods.R;
 import com.jrmedia.rosafoods.domain.Feature;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.ViewHolder> {
     Context context;
@@ -36,7 +38,10 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.mFeatCost.setText(mFeatureList.get(position).getPrice()+" $");
+        /*holder.mFeatCost.setText(mFeatureList.get(position).getPrice()+" $");*/
+        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("pt", "BR")); //Conversão para Real Brasil
+        holder.mFeatCost.setText(format.format(mFeatureList.get(position).getPrice()));
+
         holder.mFeatName.setText(mFeatureList.get(position).getName());
         /*Glide.with(context).load(mFeatureList.get(position).getImg_url()).into(holder.mFeatImage);*/
         int currentPosition = holder.getAdapterPosition();
