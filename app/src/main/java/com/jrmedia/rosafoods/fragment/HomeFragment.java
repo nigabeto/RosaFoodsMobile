@@ -22,7 +22,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.ktx.Firebase;
 import com.jrmedia.rosafoods.R;
 import com.jrmedia.rosafoods.adapter.CategoryAdapter;
+import com.jrmedia.rosafoods.adapter.FeatureAdapter;
 import com.jrmedia.rosafoods.domain.Category;
+import com.jrmedia.rosafoods.domain.Feature;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +34,16 @@ import java.util.List;
  */
 public class HomeFragment extends Fragment {
     private FirebaseFirestore mStore;
+    //Category Tab
     private List<Category> mCategoryList;
     private CategoryAdapter mCategoryAdapter;
     private RecyclerView mCatRecyclerView;
+    //Feature Tab
+    private List<Feature> mFeatureList;
+    private FeatureAdapter mFeatureAdapter;
+    private RecyclerView mFeatureRecyclerView;
+    private static final String TAG = "HomeFragment";
+
 
 
     /*// TODO: Rename parameter arguments, choose names that match
@@ -76,12 +85,22 @@ public class HomeFragment extends Fragment {
             View view = inflater.inflate(R.layout.fragment_home, container, false);
             mStore=FirebaseFirestore.getInstance();
             mCatRecyclerView=view.findViewById(R.id.category_recycler);
+            mFeatureRecyclerView=view.findViewById(R.id.feature_recycler);
+            //For Category
             mCategoryList=new ArrayList<>();
-            mCategoryAdapter=new CategoryAdapter(getContext(),mCategoryList);
+            /*mCategoryAdapter=new CategoryAdapter(getContext(),mCategoryList);*/
+            mCategoryAdapter = new CategoryAdapter(requireContext(), mCategoryList);
             mCatRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
             mCatRecyclerView.setAdapter(mCategoryAdapter);
 
-            mStore.collection("Category");
+            //For Feature
+            mFeatureList=new ArrayList<>();
+            /*mFeatureAdapter=new FeatureAdapter(getContext(),mFeatureList);*/
+            mFeatureAdapter = new FeatureAdapter(requireContext(), mFeatureList);
+            mFeatureRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
+            mFeatureRecyclerView.setAdapter(mFeatureAdapter);
+
+
             mStore.collection("Category")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -91,13 +110,33 @@ public class HomeFragment extends Fragment {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                     Category category=document.toObject(Category.class);
                                     mCategoryList.add(category);
-                                    mCategoryAdapter.notifyDataSetChanged();
+
                                 }
+                                mCategoryAdapter.notifyDataSetChanged();
                             } else {
                                 Log.w(TAG, "Error getting documents.", task.getException());
                             }
                         }
                     });
+
+            mStore.collection("Feature")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Feature feature=document.toObject(Feature.class);
+                                    mFeatureList.add(feature);
+
+                                }
+                                mFeatureAdapter.notifyDataSetChanged();
+                            } else {
+                                Log.w(TAG, "Error getting documents.", task.getException());
+                            }
+                        }
+                    });
+
         return view;
     }
 }
