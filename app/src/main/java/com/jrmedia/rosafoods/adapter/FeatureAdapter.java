@@ -2,6 +2,7 @@ package com.jrmedia.rosafoods.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,20 +42,32 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.ViewHold
         /*holder.mFeatCost.setText(mFeatureList.get(position).getPrice()+" $");*/
         NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("pt", "BR")); //Conversão para Real Brasil
         holder.mFeatCost.setText(format.format(mFeatureList.get(position).getPrice()));
-
         holder.mFeatName.setText(mFeatureList.get(position).getName());
         /*Glide.with(context).load(mFeatureList.get(position).getImg_url()).into(holder.mFeatImage);*/
         int currentPosition = holder.getAdapterPosition();
         if (currentPosition != RecyclerView.NO_POSITION) {
             Glide.with(context).load(mFeatureList.get(currentPosition).getImg_url()).into(holder.mFeatImage);
         }
+
         holder.mFeatImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(context, DetailActivity.class);
-                context.startActivity(intent);
+                int currentPosition = holder.getAdapterPosition(); // Pega a posição correta do item
+                if (currentPosition != RecyclerView.NO_POSITION) { // Verifica se a posição é válida
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra("detail", mFeatureList.get(currentPosition));
+                    context.startActivity(intent);
+                }
             }
         });
+        /*holder.mFeatImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context, DetailActivity.class);
+                intent.putExtra("detail",mFeatureList.get(position));
+                context.startActivity(intent);
+            }
+        });*/
     }
 
     @Override

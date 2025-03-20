@@ -1,6 +1,8 @@
 package com.jrmedia.rosafoods.domain;
 
-public class Feature {
+import java.io.Serializable;
+
+public class Feature implements Serializable {
     String description;
     String img_url;
     String name;
