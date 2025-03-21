@@ -1,6 +1,7 @@
 package com.jrmedia.rosafoods.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.jrmedia.rosafoods.DetailActivity;
 import com.jrmedia.rosafoods.R;
 import com.jrmedia.rosafoods.domain.BestSell;
 
@@ -44,6 +46,14 @@ public class BestSellAdapter extends RecyclerView.Adapter<BestSellAdapter.ViewHo
         if (currentPosition != RecyclerView.NO_POSITION) {
             Glide.with(context).load(mBestSellList.get(currentPosition).getImg_url()).into(holder.mImage);
         }
+        holder.mImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context, DetailActivity.class);
+                intent.putExtra("detail",mBestSellList.get(position));
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

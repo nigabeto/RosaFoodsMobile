@@ -1,6 +1,8 @@
 package com.jrmedia.rosafoods.domain;
 
-public class BestSell {
+import java.io.Serializable;
+
+public class BestSell implements Serializable {
     String description;
     String img_url;
     String name;
