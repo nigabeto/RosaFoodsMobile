@@ -35,13 +35,13 @@ public class BestSellAdapter extends RecyclerView.Adapter<BestSellAdapter.ViewHo
         return new ViewHolder(view);
     }
 
-    @Override
+    /*@Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.mName.setText(mBestSellList.get(position).getName());
-        /*holder.mPrice.setText(mBestSellList.get(position).getPrice()+" $");*/
+        *//*holder.mPrice.setText(mBestSellList.get(position).getPrice()+" $");*//*
         NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("pt", "BR")); //Conversão para Real Brasil
         holder.mPrice.setText(format.format(mBestSellList.get(position).getPrice()));
-        /*Glide.with(context).load(mBestSellList.get(position).getImg_url()).into(holder.mImage);*/
+        *//*Glide.with(context).load(mBestSellList.get(position).getImg_url()).into(holder.mImage);*//*
         int currentPosition = holder.getAdapterPosition();
         if (currentPosition != RecyclerView.NO_POSITION) {
             Glide.with(context).load(mBestSellList.get(currentPosition).getImg_url()).into(holder.mImage);
@@ -54,6 +54,31 @@ public class BestSellAdapter extends RecyclerView.Adapter<BestSellAdapter.ViewHo
                 context.startActivity(intent);
             }
         });
+    }*/
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        int currentPosition = holder.getAdapterPosition();
+
+        if (currentPosition != RecyclerView.NO_POSITION) {
+            BestSell bestSellItem = mBestSellList.get(currentPosition);
+
+            holder.mName.setText(bestSellItem.getName());
+
+            NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+            holder.mPrice.setText(format.format(bestSellItem.getPrice()));
+
+            Glide.with(context).load(bestSellItem.getImg_url()).into(holder.mImage);
+
+            holder.mImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra("detail", bestSellItem);
+                    context.startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override
