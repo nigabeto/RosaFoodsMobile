@@ -1,5 +1,6 @@
 package com.jrmedia.rosafoods;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -93,7 +94,8 @@ public class DetailActivity extends AppCompatActivity {
         mBuyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent=new Intent(DetailActivity.this,AddressActivity.class);
+                startActivity(intent);
             }
         });
 
