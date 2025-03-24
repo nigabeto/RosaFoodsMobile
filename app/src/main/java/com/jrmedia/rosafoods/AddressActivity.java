@@ -22,6 +22,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.jrmedia.rosafoods.adapter.AddressAdapter;
 import com.jrmedia.rosafoods.domain.Address;
+import com.jrmedia.rosafoods.domain.BestSell;
+import com.jrmedia.rosafoods.domain.Feature;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,7 @@ public class AddressActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_address);
+        Object obj=getIntent().getSerializableExtra("item");
         mAddressRecyclerView=findViewById(R.id.address_recycler);
         paymentBtn=findViewById(R.id.payment_btn);
         mAddAddress=findViewById(R.id.add_address_btn);
@@ -68,6 +71,29 @@ public class AddressActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(AddressActivity.this, AddAddressActivity.class);
+                startActivity(intent);
+            }
+        });
+        paymentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                double amount=0.0;
+                if(obj instanceof Feature){
+                    Feature  f= (Feature) obj;
+                    amount=f.getPrice();
+                }
+                if(obj instanceof BestSell){
+                    BestSell  f= (BestSell) obj;
+                    amount=f.getPrice();
+
+                }
+                /*if(obj instanceof Items){
+                    Items  i= (Items) obj;
+                    amount=i.getPrice();
+
+                }*/
+                Intent intent=new Intent(AddressActivity.this,PaymentActivity.class);
+                intent.putExtra("amount",amount);
                 startActivity(intent);
             }
         });
