@@ -6,12 +6,20 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.jrmedia.rosafoods.adapter.AddressAdapter;
 import com.jrmedia.rosafoods.domain.Address;
 
@@ -24,6 +32,8 @@ public class AddressActivity extends AppCompatActivity {
     private Button paymentBtn;
     private Button mAddAddress;
     private List<Address>mAddressList;
+    private FirebaseFirestore mStore;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +43,27 @@ public class AddressActivity extends AppCompatActivity {
         mAddressRecyclerView=findViewById(R.id.address_recycler);
         paymentBtn=findViewById(R.id.payment_btn);
         mAddAddress=findViewById(R.id.add_address_btn);
+        mAuth=FirebaseAuth.getInstance();
+        mStore=FirebaseFirestore.getInstance();
         mAddressList=new ArrayList<>();
         mAddressAdapter=new AddressAdapter(getApplicationContext(), mAddressList);
+        mAddressRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mAddressRecyclerView.setAdapter(mAddressAdapter);
+
+        mStore.collection("User").document(mAuth.getCurrentUser().getUid())
+                .collection("Address").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(DocumentSnapshot doc:task.getResult().getDocuments()){
+                                Address address=doc.toObject(Address.class);
+                                mAddressList.add(address);
+                                mAddressAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
+
         mAddAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
