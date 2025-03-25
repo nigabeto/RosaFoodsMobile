@@ -13,6 +13,7 @@ import java.util.Locale;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -32,6 +33,7 @@ public class DetailActivity extends AppCompatActivity {
     private Button mBuyBtn;
     Feature feature = null;
     BestSell bestSell = null;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,9 @@ public class DetailActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_detail);
 
+        mToolbar=findViewById(R.id.detail_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mImage=findViewById(R.id.item_img);
         mItemName=findViewById(R.id.item_name);
         mPrice=findViewById(R.id.item_price);

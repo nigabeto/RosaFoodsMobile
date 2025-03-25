@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.widget.Toolbar;
+
+
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +39,7 @@ public class AddressActivity extends AppCompatActivity {
     private List<Address>mAddressList;
     private FirebaseFirestore mStore;
     private FirebaseAuth mAuth;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,9 @@ public class AddressActivity extends AppCompatActivity {
         paymentBtn=findViewById(R.id.payment_btn);
         mAddAddress=findViewById(R.id.add_address_btn);
         mAuth=FirebaseAuth.getInstance();
+        mToolbar=findViewById(R.id.address_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mStore=FirebaseFirestore.getInstance();
         mAddressList=new ArrayList<>();
         mAddressAdapter=new AddressAdapter(getApplicationContext(), mAddressList);

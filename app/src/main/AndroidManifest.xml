@@ -18,13 +18,13 @@
             android:name=".PaymentActivity"
             android:exported="false" />
         <activity
-            android:name=".AddAddressActivity"
+            android:name=".AddAddressActivity" android:parentActivityName=".AddressActivity"
             android:exported="false" />
         <activity
-            android:name=".AddressActivity"
+            android:name=".AddressActivity" android:parentActivityName=".DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".DetailActivity"
+            android:name=".DetailActivity" android:parentActivityName=".HomeActivity"
             android:exported="false" />
         <activity
             android:name=".ItemActivity"
@@ -33,10 +33,10 @@
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".RegisterActivity" android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".LoginActivity" android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".SplashScreenActivity"

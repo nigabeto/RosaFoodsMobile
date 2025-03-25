@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
+
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -25,6 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText mPassword;
     private Button mRegBtn;
     private FirebaseAuth mAuth;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,9 @@ public class RegisterActivity extends AppCompatActivity {
         mPassword=findViewById(R.id.reg_password);
         mRegBtn=findViewById(R.id.log_btn);
         mAuth=FirebaseAuth.getInstance();
+        mToolbar=findViewById(R.id.reg_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         mRegBtn.setOnClickListener(new View.OnClickListener() {

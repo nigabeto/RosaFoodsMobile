@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import androidx.appcompat.widget.Toolbar;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,6 +42,7 @@ public class AddAddressActivity extends AppCompatActivity {
     private Button mAddAddressbtn;
     private FirebaseFirestore mStore;
     private FirebaseAuth mAuth;
+    private Toolbar mToolbar;
     private RequestQueue requestQueue; // Fila de requisição para Volley
     private Handler cepHandler = new Handler();
     private Runnable cepRunnable;
@@ -59,6 +60,9 @@ public class AddAddressActivity extends AppCompatActivity {
         mNumber = findViewById(R.id.ad_phone);
         mAddAddressbtn = findViewById(R.id.ad_add_address);
         mStore = FirebaseFirestore.getInstance();
+        mToolbar=findViewById(R.id.add_address_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mAuth = FirebaseAuth.getInstance();
         requestQueue = Volley.newRequestQueue(this); // Inicializando Volley
         formatarTelefone();
