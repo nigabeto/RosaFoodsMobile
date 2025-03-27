@@ -15,17 +15,23 @@
         android:theme="@style/Theme.RosaFoods"
         tools:targetApi="31">
         <activity
+            android:name=".ItemsActivity"
+            android:exported="false" />
+        <activity
             android:name=".PaymentActivity"
             android:exported="false" />
         <activity
-            android:name=".AddAddressActivity" android:parentActivityName=".AddressActivity"
-            android:exported="false" />
+            android:name=".AddAddressActivity"
+            android:exported="false"
+            android:parentActivityName=".AddressActivity" />
         <activity
-            android:name=".AddressActivity" android:parentActivityName=".DetailActivity"
-            android:exported="false" />
+            android:name=".AddressActivity"
+            android:exported="false"
+            android:parentActivityName=".DetailActivity" />
         <activity
-            android:name=".DetailActivity" android:parentActivityName=".HomeActivity"
-            android:exported="false" />
+            android:name=".DetailActivity"
+            android:exported="false"
+            android:parentActivityName=".HomeActivity" />
         <activity
             android:name=".ItemActivity"
             android:exported="false" />
@@ -33,11 +39,13 @@
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity" android:parentActivityName=".MainActivity"
-            android:exported="false" />
+            android:name=".RegisterActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".LoginActivity" android:parentActivityName=".MainActivity"
-            android:exported="false" />
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".SplashScreenActivity"
             android:exported="true">

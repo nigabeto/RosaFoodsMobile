@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.jrmedia.rosafoods.ItemActivity;
+import com.jrmedia.rosafoods.ItemsActivity;
 import com.jrmedia.rosafoods.R;
 import com.jrmedia.rosafoods.domain.Category;
 
@@ -43,7 +44,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         holder.mTypeImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(context, ItemActivity.class);
+                Intent intent=new Intent(context, ItemsActivity.class);
                 /*intent.putExtra("type", mCategoryList.get(position).getType());*/
                 intent.putExtra("type", mCategoryList.get(holder.getAdapterPosition()).getType());
 

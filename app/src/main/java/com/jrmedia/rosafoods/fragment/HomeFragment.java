@@ -2,6 +2,7 @@ package com.jrmedia.rosafoods.fragment;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.ktx.Firebase;
+import com.jrmedia.rosafoods.ItemsActivity;
 import com.jrmedia.rosafoods.R;
 import com.jrmedia.rosafoods.adapter.BestSellAdapter;
 import com.jrmedia.rosafoods.adapter.CategoryAdapter;
@@ -49,6 +52,9 @@ public class HomeFragment extends Fragment {
     private List<BestSell> mBestSellList;
     private BestSellAdapter mBestSellAdapter;
     private RecyclerView mBestSellRecyclerView;
+    private TextView mSeeAll;
+    private TextView mFeature;
+    private TextView mBestSell;
 
 
 
@@ -91,6 +97,9 @@ public class HomeFragment extends Fragment {
             // Inflate the layout for this fragment
             View view = inflater.inflate(R.layout.fragment_home, container, false);
             mStore=FirebaseFirestore.getInstance();
+            mSeeAll=view.findViewById(R.id.see_all);
+            mFeature=view.findViewById(R.id.fea_see_all);
+            mBestSell=view.findViewById(R.id.best_sell);
             mCatRecyclerView=view.findViewById(R.id.category_recycler);
             mFeatureRecyclerView=view.findViewById(R.id.feature_recycler);
             mBestSellRecyclerView=view.findViewById(R.id.bestsell_recycler);
@@ -169,6 +178,27 @@ public class HomeFragment extends Fragment {
                             }
                         }
                     });
+        mSeeAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), ItemsActivity.class);
+                startActivity(intent);
+            }
+        });
+        mBestSell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), ItemsActivity.class);
+                startActivity(intent);
+            }
+        });
+        mFeature.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), ItemsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
