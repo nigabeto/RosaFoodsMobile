@@ -23,10 +23,13 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
     Context applicationContext;
     List<Address> mAddressList;
     private RadioButton mSelectedRadioButton;
+    SelectedAddress selectedAddress;
 
-    public AddressAdapter(Context applicationContext, List<Address> mAddressList) {
+
+    public AddressAdapter(Context applicationContext, List<Address> mAddressList, SelectedAddress selectedAddress) {
         this.applicationContext=applicationContext;
         this.mAddressList=mAddressList;
+        this.selectedAddress=selectedAddress;
     }
 
     @NonNull
@@ -43,17 +46,17 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
         holder.mRadio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int currentPosition = holder.getAdapterPosition(); // Obtém a posição atual do item
+                int adapterPosition = holder.getAdapterPosition(); // Usar getAdapterPosition() em vez da posição direta
 
-                if (currentPosition == RecyclerView.NO_POSITION) {
-                    return; // Evita ações em um item que não está mais na lista
+                if (adapterPosition == RecyclerView.NO_POSITION) {
+                    return; // Item não está mais na lista
                 }
 
                 for (Address address : mAddressList) {
                     address.setSelected(false);
                 }
 
-                mAddressList.get(currentPosition).setSelected(true);
+                mAddressList.get(adapterPosition).setSelected(true);
 
                 if (mSelectedRadioButton != null) {
                     mSelectedRadioButton.setChecked(false);
@@ -61,10 +64,12 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
 
                 mSelectedRadioButton = (RadioButton) view;
                 mSelectedRadioButton.setChecked(true);
+                selectedAddress.setAddress(mAddressList.get(adapterPosition).getAddress()); // Usar adapterPosition aqui também
             }
-
         });
 
+        // Definir o estado do RadioButton baseado no modelo
+        holder.mRadio.setChecked(mAddressList.get(position).isSelected());
     }
 
     @Override
@@ -81,5 +86,8 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
             mAddress=itemView.findViewById(R.id.address_add);
             mRadio=itemView.findViewById(R.id.select_address);
         }
+    }
+    public interface SelectedAddress{
+        public void setAddress(String s);
     }
 }

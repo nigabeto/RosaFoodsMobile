@@ -32,7 +32,7 @@ import com.jrmedia.rosafoods.domain.Items;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddressActivity extends AppCompatActivity {
+public class AddressActivity extends AppCompatActivity implements AddressAdapter.SelectedAddress {
     private RecyclerView mAddressRecyclerView;
     private AddressAdapter mAddressAdapter;
     private Button paymentBtn;
@@ -41,6 +41,7 @@ public class AddressActivity extends AppCompatActivity {
     private FirebaseFirestore mStore;
     private FirebaseAuth mAuth;
     private Toolbar mToolbar;
+    String address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +54,12 @@ public class AddressActivity extends AppCompatActivity {
         mAddAddress=findViewById(R.id.add_address_btn);
         mAuth=FirebaseAuth.getInstance();
         mToolbar=findViewById(R.id.address_toolbar);
+
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mStore=FirebaseFirestore.getInstance();
         mAddressList=new ArrayList<>();
-        mAddressAdapter=new AddressAdapter(getApplicationContext(), mAddressList);
+        mAddressAdapter=new AddressAdapter(getApplicationContext(), mAddressList, this);
         mAddressRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mAddressRecyclerView.setAdapter(mAddressAdapter);
 
@@ -86,22 +88,34 @@ public class AddressActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 double amount=0.0;
+                String url="";
+                String name="";
                 if(obj instanceof Feature){
                     Feature  f= (Feature) obj;
                     amount=f.getPrice();
+                    url=f.getImg_url();
+                    name=f.getName();
                 }
                 if(obj instanceof BestSell){
                     BestSell  f= (BestSell) obj;
                     amount=f.getPrice();
+                    url=f.getImg_url();
+                    name=f.getName();
 
                 }
                 if(obj instanceof Items){
                     Items  i= (Items) obj;
                     amount=i.getPrice();
+                    url=i.getImg_url();
+                    name=i.getName();
 
                 }
                 Intent intent=new Intent(AddressActivity.this,PaymentActivity.class);
                 intent.putExtra("amount",amount);
+                intent.putExtra("img_url", url);
+                intent.putExtra("name",name);
+                intent.putExtra("address", address);
+
                 startActivity(intent);
             }
         });
@@ -113,5 +127,15 @@ public class AddressActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    /*@Override
+    public void setAddress() {
+
+    }*/
+
+    @Override
+    public void setAddress(String s) {
+        address=s;
     }
 }
