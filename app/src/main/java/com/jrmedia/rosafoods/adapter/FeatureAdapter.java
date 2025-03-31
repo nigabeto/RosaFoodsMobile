@@ -60,14 +60,7 @@ public class FeatureAdapter extends RecyclerView.Adapter<FeatureAdapter.ViewHold
                 }
             }
         });
-        /*holder.mFeatImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(context, DetailActivity.class);
-                intent.putExtra("detail",mFeatureList.get(position));
-                context.startActivity(intent);
-            }
-        });*/
+
     }
 
     @Override
