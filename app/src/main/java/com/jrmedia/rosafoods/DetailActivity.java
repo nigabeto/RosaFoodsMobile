@@ -21,6 +21,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.bumptech.glide.Glide;
 import com.jrmedia.rosafoods.domain.BestSell;
 import com.jrmedia.rosafoods.domain.Feature;
+import com.jrmedia.rosafoods.domain.Items;
 
 public class DetailActivity extends AppCompatActivity {
     private ImageView mImage;
@@ -33,6 +34,7 @@ public class DetailActivity extends AppCompatActivity {
     private Button mBuyBtn;
     Feature feature = null;
     BestSell bestSell = null;
+    Items items=null;
     private Toolbar mToolbar;
 
     @Override
@@ -56,8 +58,10 @@ public class DetailActivity extends AppCompatActivity {
         Object obj = getIntent().getSerializableExtra("detail");
         if (obj instanceof Feature){
             feature = (Feature) obj;
-        }else {
+        }else if (obj instanceof BestSell){
             bestSell = (BestSell) obj;
+        }else if (obj instanceof Items){
+            items = (Items) obj;
         }
         if (feature!=null){
             Glide.with(getApplicationContext()).load(feature.getImg_url()).into(mImage);
@@ -91,6 +95,22 @@ public class DetailActivity extends AppCompatActivity {
             mItemDesc.setText(bestSell.getDescription());
         }
 
+        if (items!=null){
+            Glide.with(getApplicationContext()).load(items.getImg_url()).into(mImage);
+            mItemName.setText(items.getName());
+            /* mPrice.setText(bestSell.getPrice()+"$");*/
+            // Formatar o preço no formato Real (BRL) com 2 casas decimais
+            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+            mPrice.setText(currencyFormat.format(items.getPrice()));
+            mItemRating.setText(items.getRating()+"");
+            if(items.getRating()>3){
+                mItemRatDesc.setText("Very Good");
+            }else{
+                mItemRatDesc.setText("Good");
+            }
+            mItemDesc.setText(items.getDescription());
+        }
+
         mAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,9 +127,9 @@ public class DetailActivity extends AppCompatActivity {
                 if(bestSell!=null){
                     intent.putExtra("item", bestSell);
                 }
-                /*if(items!=null){
+                if(items!=null){
                     intent.putExtra("item", items);
-                }*/
+                }
                 startActivity(intent);
             }
         });

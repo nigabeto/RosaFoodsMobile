@@ -38,37 +38,37 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        int currentPosition = holder.getAdapterPosition();
+        if (currentPosition == RecyclerView.NO_POSITION) {
+            return;
+        }
+
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-        String formattedPrice = currencyFormat.format(mItemsList.get(position).getPrice());
+        String formattedPrice = currencyFormat.format(mItemsList.get(currentPosition).getPrice());
         holder.mCost.setText(formattedPrice);
-        holder.mName.setText(mItemsList.get(position).getName());
+        holder.mName.setText(mItemsList.get(currentPosition).getName());
 
-        if(!(applicationContext instanceof HomeActivity)){
-            Glide.with(applicationContext).load(mItemsList.get(position).getImg_url()).into(holder.mItemImage);
-
-        }else
-        {
+        if (!(applicationContext instanceof HomeActivity)) {
+            Glide.with(applicationContext)
+                    .load(mItemsList.get(currentPosition).getImg_url())
+                    .into(holder.mItemImage);
+        } else {
             holder.mItemImage.setVisibility(View.GONE);
         }
 
-        /*holder.mItemImage.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener detailClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(applicationContext, DetailActivity.class);
-                intent.putExtra("detail",mItemsList.get(position));
+                Intent intent = new Intent(applicationContext, DetailActivity.class);
+                intent.putExtra("detail", mItemsList.get(holder.getAdapterPosition()));
                 applicationContext.startActivity(intent);
             }
-        });
-        holder.mName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(applicationContext, DetailActivity.class);
-                intent.putExtra("detail",mItemsList.get(position));
-                applicationContext.startActivity(intent);
-            }
-        });*/
+        };
 
+        holder.mItemImage.setOnClickListener(detailClickListener);
+        holder.mName.setOnClickListener(detailClickListener);
     }
+
 
     @Override
     public int getItemCount() {

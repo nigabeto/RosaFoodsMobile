@@ -27,6 +27,7 @@ import com.jrmedia.rosafoods.adapter.AddressAdapter;
 import com.jrmedia.rosafoods.domain.Address;
 import com.jrmedia.rosafoods.domain.BestSell;
 import com.jrmedia.rosafoods.domain.Feature;
+import com.jrmedia.rosafoods.domain.Items;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,11 +95,11 @@ public class AddressActivity extends AppCompatActivity {
                     amount=f.getPrice();
 
                 }
-                /*if(obj instanceof Items){
+                if(obj instanceof Items){
                     Items  i= (Items) obj;
                     amount=i.getPrice();
 
-                }*/
+                }
                 Intent intent=new Intent(AddressActivity.this,PaymentActivity.class);
                 intent.putExtra("amount",amount);
                 startActivity(intent);
