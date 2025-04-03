@@ -150,6 +150,12 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+        if (item.getItemId() == R.id.cart) {
+
+            Intent intent = new Intent(HomeActivity.this, CartActivity.class);
+            startActivity(intent);
+
+        }
         return true;
     }
 }

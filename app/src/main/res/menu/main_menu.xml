@@ -5,4 +5,7 @@
     <item
         android:id="@+id/logout_btn"
         android:title="Log out" />
+    <item
+        android:title="Cart"
+        android:id="@+id/cart"/>
 </menu>

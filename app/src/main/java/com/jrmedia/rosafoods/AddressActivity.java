@@ -29,6 +29,7 @@ import com.jrmedia.rosafoods.domain.BestSell;
 import com.jrmedia.rosafoods.domain.Feature;
 import com.jrmedia.rosafoods.domain.Items;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +50,7 @@ public class AddressActivity extends AppCompatActivity implements AddressAdapter
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_address);
         Object obj=getIntent().getSerializableExtra("item");
+        List<Items> itemsList = (ArrayList<Items>) getIntent().getSerializableExtra("itemList");
         mAddressRecyclerView=findViewById(R.id.address_recycler);
         paymentBtn=findViewById(R.id.payment_btn);
         mAddAddress=findViewById(R.id.add_address_btn);
@@ -110,13 +112,21 @@ public class AddressActivity extends AppCompatActivity implements AddressAdapter
                     name=i.getName();
 
                 }
-                Intent intent=new Intent(AddressActivity.this,PaymentActivity.class);
-                intent.putExtra("amount",amount);
-                intent.putExtra("img_url", url);
-                intent.putExtra("name",name);
-                intent.putExtra("address", address);
+                if(itemsList!=null && itemsList.size()>0){
+                    Intent intent=new Intent(AddressActivity.this,PaymentActivity.class);
+                    intent.putExtra("itemList", (Serializable) itemsList);
+                    intent.putExtra("amount", getIntent().getDoubleExtra("amount", 0.0)); // Repassando o valor total
+                    startActivity(intent);
+                }else {
+                    Intent intent=new Intent(AddressActivity.this,PaymentActivity.class);
+                    intent.putExtra("amount",amount);
+                    intent.putExtra("img_url", url);
+                    intent.putExtra("name",name);
+                    intent.putExtra("address", address);
 
-                startActivity(intent);
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -129,10 +139,7 @@ public class AddressActivity extends AppCompatActivity implements AddressAdapter
         });
     }
 
-    /*@Override
-    public void setAddress() {
 
-    }*/
 
     @Override
     public void setAddress(String s) {

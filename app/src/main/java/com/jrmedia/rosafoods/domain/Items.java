@@ -9,6 +9,15 @@ public class Items implements Serializable {
     String type;
     int rating;
     double price;
+    String docId;
+
+    public String getDocId() {
+        return docId;
+    }
+
+    public void setDocId(String docId) {
+        this.docId = docId;
+    }
 
     public Items() {
     }
