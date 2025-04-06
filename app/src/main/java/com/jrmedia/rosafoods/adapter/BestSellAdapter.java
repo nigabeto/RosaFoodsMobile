@@ -23,15 +23,16 @@ import java.util.Locale;
 public class BestSellAdapter extends RecyclerView.Adapter<BestSellAdapter.ViewHolder> {
     Context context;
     List<BestSell> mBestSellList;
+
     public BestSellAdapter(Context context, List<BestSell> mBestSellList) {
-        this.context=context;
-        this.mBestSellList=mBestSellList;
+        this.context = context;
+        this.mBestSellList = mBestSellList;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.single_bestsell_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.single_bestsell_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -41,21 +42,14 @@ public class BestSellAdapter extends RecyclerView.Adapter<BestSellAdapter.ViewHo
 
         if (currentPosition != RecyclerView.NO_POSITION) {
             BestSell bestSellItem = mBestSellList.get(currentPosition);
-
             holder.mName.setText(bestSellItem.getName());
-
             NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
             holder.mPrice.setText(format.format(bestSellItem.getPrice()));
-
             Glide.with(context).load(bestSellItem.getImg_url()).into(holder.mImage);
-
-            holder.mImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, DetailActivity.class);
-                    intent.putExtra("detail", bestSellItem);
-                    context.startActivity(intent);
-                }
+            holder.mImage.setOnClickListener(view -> {
+                Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra("detail", bestSellItem);
+                context.startActivity(intent);
             });
         }
     }
@@ -65,16 +59,16 @@ public class BestSellAdapter extends RecyclerView.Adapter<BestSellAdapter.ViewHo
         return mBestSellList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        private ImageView mImage;
-        private TextView mPrice;
-        private TextView mName;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final ImageView mImage;
+        private final TextView mPrice;
+        private final TextView mName;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mImage=itemView.findViewById(R.id.bs_img);
-            mPrice=itemView.findViewById(R.id.bs_cost);
-            mName=itemView.findViewById(R.id.bs_name);
+            mImage = itemView.findViewById(R.id.bs_img);
+            mPrice = itemView.findViewById(R.id.bs_cost);
+            mName = itemView.findViewById(R.id.bs_name);
         }
     }
 }

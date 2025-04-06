@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="88dp"
-        android:text="Very Good"
+        android:text="Muito bom"
         app:layout_constraintEnd_toStartOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/divider" />
 
@@ -77,7 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="40dp"
-        android:text="49 Reviews"
+        android:text="49 Avaliações"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider" />
 
@@ -87,7 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="16dp"
-        android:text="Description Item"
+        android:text="Descrição"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
@@ -107,7 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
-        android:text="Select Size"
+        android:text="Tamanho"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider3" />
 
@@ -118,8 +118,8 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="1dp"
-        android:text="Add to cart"
         android:background="@drawable/login_btn_bg"
+        android:text="Adicionar ao carrinho"
         app:layout_constraintEnd_toStartOf="@+id/item_buy_now"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider4" />
@@ -131,9 +131,9 @@
         android:layout_marginStart="1dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="15dp"
-        android:text="Buy now"
-        android:textColor="@color/white"
         android:background="@drawable/login_btn_bg"
+        android:text="Comprar agora"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/item_add_cart"
         app:layout_constraintTop_toBottomOf="@+id/divider4" />
@@ -163,7 +163,7 @@
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_marginStart="116dp"
-        android:text="S"
+        android:text="P"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
@@ -181,7 +181,7 @@
         android:layout_width="60dp"
         android:layout_height="40dp"
         android:layout_marginStart="48dp"
-        android:text="L"
+        android:text="G"
         app:layout_constraintStart_toEndOf="@+id/button7"
         app:layout_constraintTop_toTopOf="@+id/button6" />
 

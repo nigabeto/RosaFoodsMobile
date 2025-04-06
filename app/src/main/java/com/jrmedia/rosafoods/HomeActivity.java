@@ -6,12 +6,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,12 +19,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.jrmedia.rosafoods.adapter.ItemsRecyclerAdapter;
 import com.jrmedia.rosafoods.domain.Items;
 import com.jrmedia.rosafoods.fragment.HomeFragment;
@@ -49,19 +42,18 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*EdgeToEdge.enable(this);*/
         setContentView(R.layout.activity_home);
         homeFragment = new HomeFragment();
         loadFragment(homeFragment);
-        mAuth=FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         mToolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(mToolbar);
-        mSearchtext=findViewById(R.id.search_text);
-        mStore=FirebaseFirestore.getInstance();
-        mItemsList=new ArrayList<>();
-        mItemRecyclerView=findViewById(R.id.search_recycler);
+        mSearchtext = findViewById(R.id.search_text);
+        mStore = FirebaseFirestore.getInstance();
+        mItemsList = new ArrayList<>();
+        mItemRecyclerView = findViewById(R.id.search_recycler);
         mItemRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        itemsRecyclerAdapter=new ItemsRecyclerAdapter(this,mItemsList);
+        itemsRecyclerAdapter = new ItemsRecyclerAdapter(this, mItemsList);
         mItemRecyclerView.setAdapter(itemsRecyclerAdapter);
         mSearchtext.addTextChangedListener(new TextWatcher() {
             @Override
@@ -77,25 +69,14 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
-                if(s.toString().isEmpty()){
+                if (s.toString().isEmpty()) {
                     mItemsList.clear();
                     itemsRecyclerAdapter.notifyDataSetChanged();
-                }else{
+                } else {
                     searchItem(s.toString());
                 }
             }
         });
-
-        /*Button btn=findViewById(R.id.logout);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(HomeActivity.this,MainActivity.class));
-                finish();
-
-            }
-        });*/
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.home_container), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -111,19 +92,16 @@ public class HomeActivity extends AppCompatActivity {
 
             mStore.collection("All")
                     .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful() && task.getResult() != null) {
-                                mItemsList.clear(); // Limpar a lista antes de adicionar novos resultados
-                                for (DocumentSnapshot doc : task.getResult().getDocuments()) {
-                                    Items items = doc.toObject(Items.class);
-                                    if (items != null && items.getName().toLowerCase().contains(searchText)) {
-                                        mItemsList.add(items);
-                                    }
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            mItemsList.clear(); // Limpar a lista antes de adicionar novos resultados
+                            for (DocumentSnapshot doc : task.getResult().getDocuments()) {
+                                Items items = doc.toObject(Items.class);
+                                if (items != null && items.getName().toLowerCase().contains(searchText)) {
+                                    mItemsList.add(items);
                                 }
-                                itemsRecyclerAdapter.notifyDataSetChanged();
                             }
+                            itemsRecyclerAdapter.notifyDataSetChanged();
                         }
                     });
         }
@@ -151,10 +129,8 @@ public class HomeActivity extends AppCompatActivity {
             finish();
         }
         if (item.getItemId() == R.id.cart) {
-
             Intent intent = new Intent(HomeActivity.this, CartActivity.class);
             startActivity(intent);
-
         }
         return true;
     }

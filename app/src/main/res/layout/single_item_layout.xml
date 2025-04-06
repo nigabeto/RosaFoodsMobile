@@ -34,8 +34,8 @@
                 android:id="@+id/item_nam"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:text="Woman T shirt" />
+                android:text="Pizza"
+                android:textSize="18sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="52dp"
         android:layout_marginTop="70dp"
-        android:text="Payment"
+        android:text="Pagamento"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Discount"
+        android:text="Desconto"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/textView12"
         app:layout_constraintHorizontal_bias="0.333"
@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Shipping"
+        android:text="Frete"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/textView14"
         app:layout_constraintHorizontal_bias="0.0"
@@ -116,6 +116,7 @@
         android:layout_marginStart="52dp"
         android:layout_marginTop="16dp"
         android:text="Total"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider5" />
 
@@ -125,7 +126,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="88dp"
-        android:text="TextView"
+        android:text="$ 0"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider5" />
 
@@ -135,7 +137,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="@drawable/login_btn_bg"
-        android:text="Check Out"
+        android:text="Concluir compra"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

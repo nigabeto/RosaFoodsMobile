@@ -5,13 +5,12 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -19,20 +18,14 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +37,7 @@ public class AddAddressActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Toolbar mToolbar;
     private RequestQueue requestQueue; // Fila de requisição para Volley
-    private Handler cepHandler = new Handler();
+    private final Handler cepHandler = new Handler();
     private Runnable cepRunnable;
 
     @Override
@@ -60,7 +53,7 @@ public class AddAddressActivity extends AppCompatActivity {
         mNumber = findViewById(R.id.ad_phone);
         mAddAddressbtn = findViewById(R.id.ad_add_address);
         mStore = FirebaseFirestore.getInstance();
-        mToolbar=findViewById(R.id.add_address_toolbar);
+        mToolbar = findViewById(R.id.add_address_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mAuth = FirebaseAuth.getInstance();
@@ -70,7 +63,8 @@ public class AddAddressActivity extends AppCompatActivity {
         // Adiciona listener para buscar CEP
         mCode.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -94,52 +88,47 @@ public class AddAddressActivity extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
-        mAddAddressbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = mName.getText().toString().trim();
-                String city = mCity.getText().toString().trim();
-                String address = mAddress.getText().toString().trim();
-                String code = mCode.getText().toString().trim();
-                String number = mNumber.getText().toString().trim();
+        mAddAddressbtn.setOnClickListener(view -> {
+            String name = mName.getText().toString().trim();
+            String city = mCity.getText().toString().trim();
+            String address = mAddress.getText().toString().trim();
+            String code = mCode.getText().toString().trim();
+            String number = mNumber.getText().toString().trim();
 
-                // Validação dos campos obrigatórios
-                if (code.isEmpty()) {
-                    mCode.setError("Campo obrigatório");
-                    mCode.requestFocus();
-                    return;
-                }
-                if (name.isEmpty()) {
-                    mName.setError("Campo obrigatório");
-                    mName.requestFocus();
-                    return;
-                }
-                if (number.isEmpty()) {
-                    mNumber.setError("Campo obrigatório");
-                    mNumber.requestFocus();
-                    return;
-                }
-
-                // Se passou pelas validações, continua normalmente
-                String final_address = name + ", " + city + ", " + address + ", " + code + ", " + number;
-
-                Map<String, String> mMap = new HashMap<>();
-                mMap.put("address", final_address);
-
-                mStore.collection("User").document(mAuth.getCurrentUser().getUid())
-                        .collection("Address").add(mMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentReference> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(AddAddressActivity.this, "Endereço Adicionado", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
-                            }
-                        });
+            // Validação dos campos obrigatórios
+            if (code.isEmpty()) {
+                mCode.setError("Campo obrigatório");
+                mCode.requestFocus();
+                return;
             }
+            if (name.isEmpty()) {
+                mName.setError("Campo obrigatório");
+                mName.requestFocus();
+                return;
+            }
+            if (number.isEmpty()) {
+                mNumber.setError("Campo obrigatório");
+                mNumber.requestFocus();
+                return;
+            }
+
+            // Se passou pelas validações, continua normalmente
+            String final_address = name + ", " + city + ", " + address + ", " + code + ", " + number;
+
+            Map<String, String> mMap = new HashMap<>();
+            mMap.put("address", final_address);
+
+            mStore.collection("User").document(mAuth.getCurrentUser().getUid())
+                    .collection("Address").add(mMap).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(AddAddressActivity.this, "Endereço Adicionado", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    });
         });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -153,30 +142,24 @@ public class AddAddressActivity extends AppCompatActivity {
         String url = "https://viacep.com.br/ws/" + cep + "/json/";
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            if (!response.has("erro")) { // Verifica se o CEP é válido
-                                String logradouro = response.getString("logradouro");
-                                String localidade = response.getString("localidade");
+                response -> {
+                    try {
+                        if (!response.has("erro")) { // Verifica se o CEP é válido
+                            String logradouro = response.getString("logradouro");
+                            String localidade = response.getString("localidade");
 
-                                mAddress.setText(logradouro);
-                                mCity.setText(localidade);
-                            } else {
-                                Toast.makeText(AddAddressActivity.this, "CEP inválido!", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            Log.e("ViaCEP", "Erro ao converter JSON", e);
+                            mAddress.setText(logradouro);
+                            mCity.setText(localidade);
+                        } else {
+                            Toast.makeText(AddAddressActivity.this, "CEP inválido!", Toast.LENGTH_SHORT).show();
                         }
+                    } catch (JSONException e) {
+                        Log.e("ViaCEP", "Erro ao converter JSON", e);
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("ViaCEP", "Erro na requisição", error);
-                        Toast.makeText(AddAddressActivity.this, "Erro ao buscar endereço!", Toast.LENGTH_SHORT).show();
-                    }
+                error -> {
+                    Log.e("ViaCEP", "Erro na requisição", error);
+                    Toast.makeText(AddAddressActivity.this, "Erro ao buscar endereço!", Toast.LENGTH_SHORT).show();
                 });
 
         requestQueue.add(request); // Adiciona a requisição na fila
@@ -185,10 +168,11 @@ public class AddAddressActivity extends AppCompatActivity {
     private void formatarTelefone() {
         mNumber.addTextChangedListener(new TextWatcher() {
             private boolean isUpdating;
-            private String oldText = "";
+            private final String oldText = "";
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -216,8 +200,8 @@ public class AddAddressActivity extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
     }
-
 }

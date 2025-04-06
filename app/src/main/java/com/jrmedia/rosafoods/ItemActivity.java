@@ -16,8 +16,8 @@ public class ItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_item);
-        String type=getIntent().getStringExtra("type");
-        Toast.makeText(this, ""+type, Toast.LENGTH_LONG).show();
+        String type = getIntent().getStringExtra("type");
+        Toast.makeText(this, "" + type, Toast.LENGTH_LONG).show();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

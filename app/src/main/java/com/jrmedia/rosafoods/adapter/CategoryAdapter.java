@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.jrmedia.rosafoods.ItemActivity;
 import com.jrmedia.rosafoods.ItemsActivity;
 import com.jrmedia.rosafoods.R;
 import com.jrmedia.rosafoods.domain.Category;
@@ -19,37 +18,31 @@ import com.jrmedia.rosafoods.domain.Category;
 import java.util.List;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
-    private Context context;
-    private List<Category> mCategoryList;
+    private final Context context;
+    private final List<Category> mCategoryList;
+
     public CategoryAdapter(Context context, List<Category> mCategoryList) {
-        this.context=context;
-        this.mCategoryList=mCategoryList;
+        this.context = context;
+        this.mCategoryList = mCategoryList;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.single_category_item,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.single_category_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        /*Glide.with(context).load(mCategoryList.get(position).getImg_url()).into(holder.mTypeImg);*/
         int currentPosition = holder.getAdapterPosition();
         if (currentPosition != RecyclerView.NO_POSITION) {
             Glide.with(context).load(mCategoryList.get(currentPosition).getImg_url()).into(holder.mTypeImg);
         }
-
-        holder.mTypeImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(context, ItemsActivity.class);
-                /*intent.putExtra("type", mCategoryList.get(position).getType());*/
-                intent.putExtra("type", mCategoryList.get(holder.getAdapterPosition()).getType());
-
-                context.startActivity(intent);
-            }
+        holder.mTypeImg.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ItemsActivity.class);
+            intent.putExtra("type", mCategoryList.get(holder.getAdapterPosition()).getType());
+            context.startActivity(intent);
         });
     }
 
@@ -58,13 +51,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         return mCategoryList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        private ImageView mTypeImg;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final ImageView mTypeImg;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mTypeImg=itemView.findViewById(R.id.category_img);
+            mTypeImg = itemView.findViewById(R.id.category_img);
         }
     }
-
 }

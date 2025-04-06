@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="32dp"
-        android:text="Address"
+        android:text="Endereços"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/address_toolbar" />
@@ -41,13 +41,13 @@
             android:id="@+id/add_address_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Address" />
+            android:text="Adicionar Endereço" />
 
         <Button
             android:id="@+id/payment_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Continue to payment" />
+            android:text="Realizar Pagamento" />
 
     </LinearLayout>
 

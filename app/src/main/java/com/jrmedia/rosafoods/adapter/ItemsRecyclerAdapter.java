@@ -24,15 +24,16 @@ import java.util.Locale;
 public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdapter.ViewHolder> {
     Context applicationContext;
     List<Items> mItemsList;
+
     public ItemsRecyclerAdapter(Context applicationContext, List<Items> mItemsList) {
-        this.applicationContext=applicationContext;
-        this.mItemsList=mItemsList;
+        this.applicationContext = applicationContext;
+        this.mItemsList = mItemsList;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(applicationContext).inflate(R.layout.single_item_layout,parent,false);
+        View view = LayoutInflater.from(applicationContext).inflate(R.layout.single_item_layout, parent, false);
         return new ViewHolder(view);
     }
 
@@ -56,35 +57,31 @@ public class ItemsRecyclerAdapter extends RecyclerView.Adapter<ItemsRecyclerAdap
             holder.mItemImage.setVisibility(View.GONE);
         }
 
-        View.OnClickListener detailClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(applicationContext, DetailActivity.class);
-                intent.putExtra("detail", mItemsList.get(holder.getAdapterPosition()));
-                applicationContext.startActivity(intent);
-            }
+        View.OnClickListener detailClickListener = v -> {
+            Intent intent = new Intent(applicationContext, DetailActivity.class);
+            intent.putExtra("detail", mItemsList.get(holder.getAdapterPosition()));
+            applicationContext.startActivity(intent);
         };
 
         holder.mItemImage.setOnClickListener(detailClickListener);
         holder.mName.setOnClickListener(detailClickListener);
     }
 
-
     @Override
     public int getItemCount() {
         return mItemsList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView mItemImage;
-        private TextView mCost;
-        private TextView mName;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final ImageView mItemImage;
+        private final TextView mCost;
+        private final TextView mName;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mItemImage=itemView.findViewById(R.id.item_image);
-            mCost=itemView.findViewById(R.id.item_cost);
-            mName=itemView.findViewById(R.id.item_nam);
+            mItemImage = itemView.findViewById(R.id.item_image);
+            mCost = itemView.findViewById(R.id.item_cost);
+            mName = itemView.findViewById(R.id.item_nam);
         }
     }
 }
