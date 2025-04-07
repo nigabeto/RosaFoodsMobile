@@ -94,6 +94,18 @@ public class ItemsActivity extends AppCompatActivity {
                 }
             });
         }
+        if (type != null && type.equalsIgnoreCase("Esfihas")) {
+            mStore.collection("All").whereEqualTo("type", "Esfihas").get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot doc : task.getResult().getDocuments()) {
+                        Log.i("TAG", "onComplete: " + doc.toString());
+                        Items items = doc.toObject(Items.class);
+                        mItemsList.add(items);
+                        itemsRecyclerAdapter.notifyDataSetChanged();
+                    }
+                }
+            });
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

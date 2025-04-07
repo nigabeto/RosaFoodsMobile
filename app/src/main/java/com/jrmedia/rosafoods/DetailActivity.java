@@ -77,9 +77,9 @@ public class DetailActivity extends AppCompatActivity {
 
             mItemRating.setText(feature.getRating() + "");
             if (feature.getRating() > 3) {
-                mItemRatDesc.setText("Very Good");
+                mItemRatDesc.setText("Muito Bom");
             } else {
-                mItemRatDesc.setText("Good");
+                mItemRatDesc.setText("Bom");
             }
             mItemDesc.setText(feature.getDescription());
         }
@@ -93,9 +93,9 @@ public class DetailActivity extends AppCompatActivity {
 
             mItemRating.setText(bestSell.getRating() + "");
             if (bestSell.getRating() > 3) {
-                mItemRatDesc.setText("Very Good");
+                mItemRatDesc.setText("Muito Bom");
             } else {
-                mItemRatDesc.setText("Good");
+                mItemRatDesc.setText("Bom");
             }
             mItemDesc.setText(bestSell.getDescription());
         }
@@ -109,9 +109,9 @@ public class DetailActivity extends AppCompatActivity {
 
             mItemRating.setText(items.getRating() + "");
             if (items.getRating() > 3) {
-                mItemRatDesc.setText("Very Good");
+                mItemRatDesc.setText("Muito Bom");
             } else {
-                mItemRatDesc.setText("Good");
+                mItemRatDesc.setText("Bom");
             }
             mItemDesc.setText(items.getDescription());
         }
